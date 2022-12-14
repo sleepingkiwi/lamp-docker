@@ -25,6 +25,8 @@ services:
     image: php:8.0-apache
     volumes:
       - ./php/src:/var/www/html/
+      # links to our local uploads.ini to control uploads etc.
+      - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
     environment:
       VIRTUAL_HOST: example-site.local
 
