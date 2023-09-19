@@ -22,7 +22,7 @@ services:
     build:
       context: ./php
       dockerfile: dockerfile
-    image: php:8.0-apache
+    # image: php:8.0-apache
     volumes:
       - ./php/src:/var/www/html/
       # links to our local uploads.ini to control uploads etc.
