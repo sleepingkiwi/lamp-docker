@@ -11,7 +11,8 @@ Requires our [nginx-proxy](https://github.com/sleepingkiwi/nginx-proxy-docker) c
 ## usage
 
 - put it in to a directory
-- run `docker-compose up` or `docker-compose up -d` (`docker-compose stop` to stop that one)
+- run `docker-compose up` to run in the terminal
+- or `docker-compose up -d` to run in the background (`docker-compose stop` to stop that one)
 - run `docker-compose down` to clean up everything that hasn't been saved to a volume specified in `docker-compose.yml`
 
 See below for specifics
@@ -57,13 +58,13 @@ sudo nano /etc/hosts
 # 127.0.0.1 db.example-site.local
 ```
 
-Now you also need to add your local URL under VIRTUAL_HOST: for the php and database images. Replace `example-site.local` in both places with the name you just added to /etc/hosts
+Now you also need to add your local URL under VIRTUAL_HOST: for the WordPress and database images . Replace `example-site.local` in both places (in `docker-compose.yml`) with the name you just added to /etc/hosts
 
 Now if you run docker-compose up (and the proxy is running) you should be able to access your image (when it's running) on `http://example-site.local` and phpmyadmin for the database at `http://db.example-site.local`
 
 ### Set up an ssl cert for that local domain
 
-> If this is the first time setting up a cert:
+> 👋 If this is the first time setting up a cert:
 
 #### Set up a local Cerificate Authority (CA)
 
@@ -73,7 +74,7 @@ _You only need to do this step once_ - if you already have one then you don't ne
   - on macos that's `brew install mkcert` and `brew install nss`
 - run `mkcert -install`
 
-> If yoy already have a local CA set up:
+> 👋 If you already have a local CA set up:
 
 #### Make self signed SSL certs for your local domain and give them to local proxy
 
@@ -84,3 +85,11 @@ These need to go into the `./certs` directory at the root of your local [nginx-p
 mkcert -cert-file example-site.local.crt -key-file example-site.local.key example-site.local
 mkcert -cert-file db.example-site.local.crt -key-file db.example-site.local.key db.example-site.local
 ```
+
+## Using xdebug
+
+If you have the [PHP Debug](https://marketplace.visualstudio.com/items?itemName=xdebug.php-debug) extension installed then the launch.json inside the `.vscode` dir in this repo should just work!
+
+In vscode if you `view > run` and choose `listen for xdebug` from the dropdown in the _run and debug_ panel then vscode will automatically detect errors/breakpoints in your running code.
+
+👋 This repo contains a `launch.json` file that works well if you have vscode open from the very root of your project (i.e. the directory containing `docker-compose.yml`).
